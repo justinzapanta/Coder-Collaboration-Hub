@@ -1,0 +1,40 @@
+{% extends 'main/parts/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container max-w-full h-screen flex flex-col justify-center ">
+        <div class="container max-w-full flex justify-center ">
+            <div class=" w-10/12 md:w-96 bg-slate-100 shadow-xl rounded-2xl relative">
+                <h1 class="font-bold text-xl text-center mt-4">Sign In</h1>
+                <form class="container max-w-full h-full " action="{% url 'login' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="container flex justify-center">
+                        <div class="flex flex-col">
+                            <label for="email">Email</label>
+                            <input class="border  border-black rounded-sm w-11/12 md:w-64 md:h-8 pl-1" name="email" type="email" required>
+                        </div>
+                    </div>
+
+                    <div class="container flex justify-center mt-4">
+                        <div class="flex flex-col">     
+                            <label for="password">Password</label>
+                            <input class="border border-black rounded-sm w-11/12 md:w-64 md:h-8 pl-1" name="password" type="password" required>
+                            <a class="mt-2 font-bold text-gray-500 md:text-base text-sm" href="#">Forgot Password</a>
+                        </div>
+                    </div>
+                    <div class="container max-w-full flex justify-center">
+                        <h1 class="text-red-400 text-sm mt-2">{{notif}}</h1>
+                    </div>
+                    <div class="container max-w-full flex justify-center mt-5">
+                        <button type="submit" class=" px-6 text-sm md:text-base md:px-7 py-1 bg-slate-950 rounded-sm text-white font-bold text-md">Sign In</button>
+                    </div>
+                    <div class="container max-w-full">
+                        <div class="flex justify-center mt-5 mb-3 md:text-base text-sm">
+                            <h1>Not a member? <a class="font-bold" href="#">Sign up now</a></h1>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
