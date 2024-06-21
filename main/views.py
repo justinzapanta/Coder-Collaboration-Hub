@@ -8,6 +8,8 @@ def index(request):
 
 def login_view(request):
     data = {}
+    if request.user.is_authenticated:
+        return redirect('projects')
 
     if request.method == "POST":
         user = authenticate(
@@ -16,10 +18,16 @@ def login_view(request):
             )
         if user:
             login(request, user)
+            return redirect('projects')
         else:
             data['notif'] = 'Invalid Email or Password'
 
-    if request.user.is_authenticated:
-        return redirect('index')
-    
+
     return render(request, 'main/views/login.html', data)
+
+
+def projects(request):
+    data = {}
+    if request.user.is_authenticated:
+        data['logined'] = True 
+    return render(request, 'main/views/projects.html', data)

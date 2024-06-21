@@ -9,15 +9,17 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body class="relative">
-    <header class="container max-w-full absolute flex  md:px-4 py-3 ">
-        <div class="flex flex-1 md:ml-0 md:justify-normal">
-            <img class=" h-14 w-20 md:h-14  md:w-32 md:mt-2 md:ml-4"  src="{% static 'img/logo.png' %}" alt="">
-        </div>
+    {% block header %}
+        <header class="container max-w-full absolute flex  md:px-4 py-3 ">
+            <div class="flex flex-1 md:ml-0 md:justify-normal">
+                <img class=" h-14 w-20 md:h-14  md:w-32 md:mt-2 md:ml-4"  src="{% static 'img/logo.png' %}" alt="">
+            </div>
 
-        <div class="w-20 h-16">
-            <a class="w-20 h-16" href="https://github.com/justinzapanta?tab=repositories"><img src="{% static 'img/GitHub-logo.png' %}" alt=""></a>
-        </div>
-    </header>
+            <div class="w-20 h-16">
+                <a target="_blank" class="w-20 h-16" href="https://github.com/justinzapanta"><img src="{% static 'img/GitHub-logo.png' %}" alt=""></a>
+            </div>
+        </header>
+    {% endblock %}
     <div class="py-1 md:py-4 container max-w-full ">
     </div>
 
