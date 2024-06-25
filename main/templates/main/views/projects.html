@@ -29,19 +29,19 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="search" id="default-search" class="block w-full p-4 mt-2  ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Users/Projects" required />
-                <button type="submit" class="text-white border border-gray-500 absolute end-2.5 bottom-2.5 bg-gray-500 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 ">Search</button>
+                <input type="search" id="default-search" class="block w-full p-4 mt-2  ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " placeholder="Search Users/Projects" required />
+                <button type="submit" class="text-white border border-gray-500 absolute end-2.5 bottom-2.5 bg-gray-500 hover:bg-slate-800 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 ">Search</button>
             </div>
         </form>  
     </div>
         <div class="flex items-center ">
-            <div class="hidden md:block">
+            <div class="flex">
                 {% if logined %}
-                    <a onclick="post_project()" href="#" class="text-white bg-slate-950 hover:bg-slate-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Post Project</a>
-                    <a href="{% url 'sign out' %}" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Sign Out</a>
+                    <a onclick="post_project()" href="#" class="text-white bg-slate-950 hover:bg-slate-700 focus:ring-4  font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 focus:outline-none">Post Project</a>
+                    <a href="{% url 'sign out' %}" class="text-gray-800 hidden md:block dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Sign Out</a>
                 {% else %}
-                    <a href="#" class="text-white bg-slate-950 hover:bg-slate-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" onclick="show()">Post Project</a>
-                    <a href="#" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800" onclick="show()">Sign In</a>
+                    <a href="#" class="text-white bg-slate-950 hover:bg-slate-700 focus:ring-4  font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5   focus:outline-none " onclick="show()">Post Project</a>
+                    <a href="#" class="text-gray-800 dark:text-white hidden md:block hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800" onclick="show()">Sign In</a>
                 {% endif %}
             </div>
 
@@ -49,11 +49,12 @@
     </div>
   </nav>
 
+
   <!--POST MODAL-->
     <div id="post-modal" class="container max-w-full h-auto md:h-screen absolute top-0 hidden flex-col justify-center z-[150]" style="background-color: rgba(0, 0, 0, 0.483);">
         <div class="flex container max-w-full justify-center md:mt-0 ">
             <!-- Main modal -->
-            <div  tabindex="-1" aria-hidden="true" class=" overflow-y-auto mt-7 overflow-x-hidden justify-center items-center w-full  md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div  tabindex="-1" aria-hidden="true" class=" md:mt-1 mt-6 overflow-x-hidden justify-center items-center sm:w-full md:w-auto  md:inset-0 h-[calc(100%-1rem)] max-h-full">
                 <div class="relative p-4 w-full max-w-md max-h-full">
                     <!-- Modal content -->
                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -62,7 +63,7 @@
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                                 Post Your Project
                             </h3>
-                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
+                            <button onclick="close_post()" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                 </svg>
@@ -90,11 +91,11 @@
                                 </div>
                                 <div class="col-span-2">
                                     <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project Description</label>
-                                    <textarea id="description" rows="4" class="block p-2.5 w-full resize-none text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write project description here"></textarea>                    
+                                    <textarea id="description" rows="4" class="block p-2.5 w-full resize-none text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300  dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white " placeholder="Write project description here"></textarea>                    
                                 </div>
                             </div>
                             <div class="container max-w-full justify-center flex">
-                                <button type="submit" class="text-white inline-flex items-center bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                <button type="submit" class="text-white inline-flex items-center bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
                                     <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
                                     Add new product
                                 </button>
@@ -107,6 +108,7 @@
         </div>
     </div>
   <!--POST MODAL END-->
+
   
   <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
      <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
@@ -136,7 +138,7 @@
                     <path fill-rule="evenodd" d="M18 3a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12l4 3V5a2 2 0 0 0-2-2zM7 7h6v1H7V7zm0 3h6v1H7v-1zm0 3h4v1H7v-1z" clip-rule="evenodd" />
                 </svg>
                 <span class="flex-1 ms-3 whitespace-nowrap">Messages</span>
-                <span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
+                <span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium  rounded-full">3</span>
                 </a>
             </li>
             <li>
@@ -150,7 +152,7 @@
             </li>
            <li class="block md:hidden">
             {% if logined %}
-                <a  href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <a  href="{% url 'sign out' %}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             {% else %}
                 <a onclick="show()" href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             {% endif %}                    
@@ -181,8 +183,8 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="search" id="default-search" class="block w-full p-4 mt-2  ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Users/Projects" required />
-                <button type="submit" class="text-white border border-gray-500 absolute end-2.5 bottom-2.5 bg-gray-500 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 ">Search</button>
+                <input type="search" id="default-search" class="block w-full p-4 mt-2  ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Search Users/Projects" required />
+                <button type="submit" class="text-white border border-gray-500 absolute end-2.5 bottom-2.5 bg-gray-500 hover:bg-slate-800 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 ">Search</button>
             </div>
         </form>  
     </div>
@@ -239,6 +241,10 @@
             let post_modal = document.querySelector('#post-modal')
             function post_project(){
                 post_modal.classList.replace('hidden', 'flex')
+            }
+
+            function close_post(){
+                post_modal.classList.replace('flex', 'hidden')
             }
         </script>
     {% endblock %}
