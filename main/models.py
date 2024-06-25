@@ -13,4 +13,16 @@ class Projects(models.Model):
 
     def __str__ (self):
         return self.project_name
+
+
+class Favorites(models.Model):
+    favorite_id = models.AutoField(primary_key=True)
+    favorite_project = models.ForeignKey(Projects, on_delete=models.CASCADE)
+    user_favorite = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class User_Friends(models.Model):
+    friend_id = models.AutoField(primary_key=True)
+    user_friend_id = models.IntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     

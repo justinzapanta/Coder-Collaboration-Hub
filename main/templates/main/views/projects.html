@@ -1,64 +1,245 @@
 {% extends 'main/parts/base.html' %}
 {% load static %}
 
-{% block header %}
-    <header class="container max-w-full fixed bg-white flex z-30 md:px-4 pt-3 border-b border-gray-400">
-        <div class="flex flex-1 md:ml-0 md:justify-normal">
-            <img class=" h-14 w-20 md:h-14  md:w-32 md:mt-1 md:ml-4"  src="{% static 'img/logo.png' %}" alt="">
-        </div>
-        <ul class="flex font-bold mt-4">
-            <li class="mr-7 "><a class="py-2 px-5 rounded-md bg-gray-300" href="#">Post Project</a></li>
-            {% if logined %}
-                <li cl><a class="py-2 px-5" href="#">Profile</a></li>
-            {% else %}
-            <li><a class="py-2 px-5" href="{% url 'login' %}">Sign In</a></li>
-            {% endif %}
-        </ul>
-    </header>
-{% endblock %}
+
 
 {% block content %}
-    <div class="container max-w-full flex">
-        <div class="h-96 w-96 ">
-            <div class=" bg-slate-200 h-96 w-80 fixed">
-
-            </div>
+<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+    <div class="px-3 py-3 lg:px-5 lg:pl-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center justify-start rtl:justify-end">
+          <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+              <span class="sr-only">Open sidebar</span>
+              <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                 <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+              </svg>
+           </button>
+          <a href="#" class="flex ms-2 md:me-24">
+            <img src="{% static 'img/logo.png' %}" class="h-10 me-3" alt="Coder Collaboration Hub" />
+          </a>
         </div>
-        <div class="container max-w-full flex flex-col">
-            <!-- Search -->
-            <form action="{% url 'projects' %}" class="container max-w-full  mt-16 flex justify-center" method="POST">
-                {% csrf_token %}
-                <input class="border w-96 h-11 mr-4 rounded-md text-lg font-mono pl-1 border-black" placeholder="Search for Users/Projects" name="search" type="text">
-                <button class="bg-slate-950 text-white px-10 font-bold rounded-lg">Search</button>
-            </form>
+        
+    <div class="px-4 sm:ml-64 flex-1 md:block hidden">
+        <form class="max-w-md mx-auto px-2">   
+            {% csrf_token %}
+            <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+            <div class="relative">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                    </svg>
+                </div>
+                <input type="search" id="default-search" class="block w-full p-4 mt-2  ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Users/Projects" required />
+                <button type="submit" class="text-white border border-gray-500 absolute end-2.5 bottom-2.5 bg-gray-500 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 ">Search</button>
+            </div>
+        </form>  
+    </div>
+        <div class="flex items-center ">
+            <div class="hidden md:block">
+                {% if logined %}
+                    <a onclick="post_project()" href="#" class="text-white bg-slate-950 hover:bg-slate-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Post Project</a>
+                    <a href="{% url 'sign out' %}" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Sign Out</a>
+                {% else %}
+                    <a href="#" class="text-white bg-slate-950 hover:bg-slate-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" onclick="show()">Post Project</a>
+                    <a href="#" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800" onclick="show()">Sign In</a>
+                {% endif %}
+            </div>
 
-            <!--Post card-->
+        </div>
+    </div>
+  </nav>
+
+  <!--POST MODAL-->
+    <div id="post-modal" class="container max-w-full h-auto md:h-screen absolute top-0 hidden flex-col justify-center z-[150]" style="background-color: rgba(0, 0, 0, 0.483);">
+        <div class="flex container max-w-full justify-center md:mt-0 ">
+            <!-- Main modal -->
+            <div  tabindex="-1" aria-hidden="true" class=" overflow-y-auto mt-7 overflow-x-hidden justify-center items-center w-full  md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div class="relative p-4 w-full max-w-md max-h-full">
+                    <!-- Modal content -->
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <!-- Modal header -->
+                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                Post Your Project
+                            </h3>
+                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                        </div>
+                        <!-- Modal body -->
+                        <form class="p-4 md:p-5">
+                            <div class="grid gap-4 mb-4 grid-cols-2">
+                                <div class="col-span-2">
+                                    <label for="project-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project Name</label>
+                                    <input type="text" name="project-name" id="project-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type project name" required="">
+                                </div>
+                                <div class="col-span-2 sm:col-span-1">
+                                    <label for="github-link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">GitHub Project Link</label>
+                                    <input type="text" name="github-link" id="github-link" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="https://github.com/user/your project name" required="">
+                                </div>
+                                <div class="col-span-2 sm:col-span-1">
+                                    <label for="discord-link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Discord Invitation Link</label>
+                                    <input type="text" name="discord-link" id="discord-link" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="https://discord.gg/HH64zYgrrw" required="">
+                                </div>
+                                <div class="col-span-2">
+                                    <label for="tools" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Programming Language and Framework</label>
+                                    <input type="text" name="tools" id="tools" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Python, Django" required="">
+                                </div>
+                                <div class="col-span-2">
+                                    <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project Description</label>
+                                    <textarea id="description" rows="4" class="block p-2.5 w-full resize-none text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write project description here"></textarea>                    
+                                </div>
+                            </div>
+                            <div class="container max-w-full justify-center flex">
+                                <button type="submit" class="text-white inline-flex items-center bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                                    Add new product
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+  <!--POST MODAL END-->
+  
+  <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
+     <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+        <ul class="space-y-2 font-medium">
+            <li>
+                <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <!-- Replace this SVG with a profile icon SVG -->
+                    <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 11a3 3 0 100-6 3 3 0 000 6z" />
+                        <path fill-rule="evenodd" d="M18 18v-2a5 5 0 00-5-5H7a5 5 0 00-5 5v2h16zM5 9a4 4 0 118 0 4 4 0 01-8 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap">Profile</span>
+                </a>
+            </li>
+           <li>
+              <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                 <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                    <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z"/>
+                 </svg>
+                 <span class="flex-1 ms-3 whitespace-nowrap">Friends</span>
+              </a>
+           </li>
+           <li>
+            <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <!-- Replace this SVG with a message icon SVG -->
+                <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 3a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12l4 3V5a2 2 0 0 0-2-2zM7 7h6v1H7V7zm0 3h6v1H7v-1zm0 3h4v1H7v-1z" clip-rule="evenodd" />
+                </svg>
+                <span class="flex-1 ms-3 whitespace-nowrap">Messages</span>
+                <span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <!-- Replace the SVG with a bookmark icon -->
+                    <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 1l2.59 5.29 5.89.86-4.28 4.18 1.01 5.87-5.31-2.79-5.31 2.79 1.01-5.87-4.28-4.18 5.89-.86L10 1z"></path>
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap">Favorites</span>
+                </a>
+            </li>
+           <li class="block md:hidden">
+            {% if logined %}
+                <a  href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            {% else %}
+                <a onclick="show()" href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            {% endif %}                    
+               <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
+               </svg>
+                <span class="flex-1 ms-3 whitespace-nowrap">
+                {% if logined %}
+                    Sign Out
+                {% else %}
+                    Sign In
+                {% endif %}                    
+                </span>
+            </a>
+         </li>
+
+        </ul>
+     </div>
+  </aside>
+
+    <div class="p-4  md:hidden block">
+        <form class="max-w-md mx-auto px-2">   
+            {% csrf_token %}
+            <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+            <div class="relative ">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                    </svg>
+                </div>
+                <input type="search" id="default-search" class="block w-full p-4 mt-2  ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Users/Projects" required />
+                <button type="submit" class="text-white border border-gray-500 absolute end-2.5 bottom-2.5 bg-gray-500 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 ">Search</button>
+            </div>
+        </form>  
+    </div>
+    <div class="p-4 sm:ml-64 mt-4">
+        <!--Post card-->
+        <div class="flex items-center justify-center h-48 mb-20 rounded">
             <div class="container max-w-full mt-8 flex justify-center">
-                
-                <div class="h-56 bg-slate-200 rounded-xl shadow-xl hover:cursor-pointer" style="width: 600px;">
-                    <div class=" flex">
-                        <a href="#"><div class="w-14 h-14 mt-5 ml-4 rounded-full bg-black">
-                        <!--Image-->
-                        <img class="rounded-full" src="{% static 'img/justin.jpg' %}" alt="">
-                        </div></a>
-                        <a class="font-bold mt-8 ml-3" href="#">Justin Zapanta</a>
+                <div class="h-56 bg-slate-200 rounded-xl shadow-xl hover:cursor-pointer w-11/12 md:w-8/12">
+                    <div class=" flex relative">
+                        <a href="#">
+                            <div class="w-10 h-10 md:w-14 md:h-14 mt-5 ml-2 md:ml-4 rounded-full bg-black">
+                                <!--Image-->
+                                <img class="rounded-full" src="{% static 'img/justin.jpg' %}" alt="">
+                            </div>
+                        </a>
+                        <a class="font-bold mt-7 md:mt-8 ml-3 md:text-base text-sm" href="#">Justin Zapanta</a>
+                        {% if logined %}
+                            <svg id="star-id" onclick="add_favorite(self)" class="flex-shrink-9 w-10 h-9 absolute right-4 top-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 1l2.59 5.29 5.89.86-4.28 4.18 1.01 5.87-5.31-2.79-5.31 2.79 1.01-5.87-4.28-4.18 5.89-.86L10 1z"></path>
+                            </svg>
+                        {% else %}
+                            <svg onclick="show()" class="flex-shrink-9 w-10 h-9 absolute right-4 top-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 1l2.59 5.29 5.89.86-4.28 4.18 1.01 5.87-5.31-2.79-5.31 2.79 1.01-5.87-4.28-4.18 5.89-.86L10 1z"></path>
+                            </svg>
+                        {% endif %}
                     </div>
                     <!--Project Name-->
-                    <h1 class="ml-10 mt-1 font-bold">Web Scraping Website</h1>
+                    <h1 class="ml-10 mt-1 font-bold md:text-base text-sm">Web Scraping Website</h1>
                     <!--Project Description-->
                     <div>
-                        <p class="container max-w-full ml-10 mt-2 line-clamp-3 " style="width: 500px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, aliquid! Ex voluptatibus qui libero, porro impedit eaque dolor tempore fugiat eius fugit dolores maiores incidunt voluptatum nihil perferendis repellat nemo odit aspernatur animi illum? Beatae ut nesciunt corrupti quisquam deleniti recusandae nam accusantium placeat. Repudiandae, rerum tenetur! Assumenda eum perferendis reprehenderit accusantium sapiente, suscipit consequuntur illo repudiandae adipisci earum, et nulla doloremque exercitationem id nam numquam neque. Nisi soluta nam quae totam iure cumque pariatur deleniti, animi cum modi incidunt, ipsa consequatur assumenda hic dicta unde consectetur facilis ea amet aspernatur qui deserunt! Minima velit officiis eos rem quae illum eligendi inventore, obcaecati suscipit eaque sunt ea, libero pariatur animi laudantium ipsa, cupiditate alias voluptatum eum cum optio quaerat tempora magni? Facere natus architecto dolore voluptatum, voluptate doloremque adipisci doloribus voluptas nemo laboriosam explicabo eveniet saepe dignissimos ducimus nisi eum iste omnis quas, aliquam libero reprehenderit. Saepe asperiores fugit laboriosam esse. Corporis sunt aliquam reprehenderit ratione distinctio numquam quos tenetur! Vel obcaecati commodi dolores adipisci temporibus delectus cumque perferendis ex, molestias vitae cupiditate earum quia ipsum ducimus non enim numquam voluptas iusto quaerat incidunt culpa animi. Non nam in maiores quod. Illo, repudiandae quia. Facere repellendus inventore in hic assumenda.
-                        </p>
+                        <p class=" px-2 md:pr-2 md:px-0 md:ml-10 mt-2 line-clamp-5 md:line-clamp-4 md:text-sm text-xs">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, aliquid! Ex voluptatibus qui libero, porro impedit eaque dolor tempore fugiat eius fugit dolores maiores incidunt voluptatum nihil perferendis repellat nemo odit aspernatur animi illum? Beatae ut nesciunt corrupti quisquam deleniti recusandae nam accusantium placeat. Repudiandae, rerum tenetur! Assumenda eum perferendis reprehenderit accusantium sapiente, suscipit consequuntur illo repudiandae adipisci earum, et nulla doloremque exercitationem id nam numquam neque. Nisi soluta nam quae totam iure cumque pariatur deleniti, animi cum modi incidunt, ipsa consequatur assumenda hic dicta unde consectetur facilis ea amet aspernatur qui deserunt! Minima velit officiis eos rem quae illum eligendi inventore, obcaecati suscipit eaque sunt ea, libero pariatur animi laudantium ipsa, cupiditate alias voluptatum eum cum optio quaerat tempora magni? Facere natus architecto dolore voluptatum, voluptate doloremque adipisci doloribus voluptas nemo laboriosam explicabo eveniet saepe dignissimos ducimus nisi eum iste omnis quas, aliquam libero reprehenderit. Saepe asperiores fugit laboriosam esse. Corporis sunt aliquam reprehenderit ratione distinctio numquam quos tenetur! Vel obcaecati commodi dolores adipisci temporibus delectus cumque perferendis ex, molestias vitae cupiditate earum quia ipsum ducimus non enim numquam voluptas iusto quaerat incidunt culpa animi. Non nam in maiores quod. Illo, repudiandae quia. Facere repellendus inventore in hic assumenda.</p>
                     </div>
                     <!--tools-->
                     <div class="mt-2 text-gray-500 border-t border-gray-300">
-                        <h1 class="ml-4 truncate" style="width: 550px;">Programming Languages: Python, Javascript, html5, and Tailwindcss</h1>
+                        <h1 class=" mt-3 px-2 ml-0 md:ml-4 truncate md:text-sm text-xs">Python, Javascript, html5, and Tailwindcss</h1>
                     </div>
                 </div>
             </div>
-            <!--end post card-->
         </div>
-    </div>
+        <!--end post card-->
 
+     </div>
+    {% block script %}
+        <script>
+            let start_id = document.querySelector('#star-id')
+            function add_favorite(_self){
+                if(start_id.classList.contains('text-gray-500')){
+                    start_id.classList.replace('text-gray-500', 'text-yellow-600')
+                }else{
+                    start_id.classList.replace('text-yellow-600', 'text-gray-500')
+                }
+            }
 
+            let post_modal = document.querySelector('#post-modal')
+            function post_project(){
+                post_modal.classList.replace('hidden', 'flex')
+            }
+        </script>
+    {% endblock %}
 {% endblock %}
