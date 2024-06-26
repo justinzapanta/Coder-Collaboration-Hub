@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="col-span-2">
                                     <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project Description</label>
-                                    <textarea id="description" rows="4" class="block p-2.5 w-full resize-none text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300  dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white " placeholder="Write project description here"></textarea>                    
+                                    <textarea id="description" rows="4" class="block p-2.5 w-full resize-none text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300  dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white " placeholder="Write project description here" required></textarea>                    
                                 </div>
                             </div>
                             <div class="container max-w-full justify-center flex">
@@ -188,11 +188,17 @@
             </div>
         </form>  
     </div>
+
+
     <div class="p-4 sm:ml-64 mt-4">
+
         <!--Post card-->
-        <div class="flex items-center justify-center h-48 mb-20 rounded">
+        <div class="flex items-center justify-center h-48 mb-16 rounded">
             <div class="container max-w-full mt-8 flex justify-center">
-                <div class="h-56 bg-slate-200 rounded-xl shadow-xl hover:cursor-pointer w-11/12 md:w-8/12">
+                <div class="h-56 relative bg-slate-200 rounded-xl shadow-lg hover:cursor-pointer w-11/12 md:w-8/12">
+                    <div class="container absolute top-0 max-w-full justify-center flex">
+                        <h1 class="text-xs font-bold text-gray-500 mt-1">click to view</h1>
+                    </div>
                     <div class=" flex relative">
                         <a href="#">
                             <div class="w-10 h-10 md:w-14 md:h-14 mt-5 ml-2 md:ml-4 rounded-full bg-black">

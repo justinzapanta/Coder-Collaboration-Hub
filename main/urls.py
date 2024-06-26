@@ -6,5 +6,8 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('projects/', views.projects, name='projects'),
     path('sign-out', views.sign_out, name='sign out'),
-    path('api/auth/login/', authentications.sign_in)
+
+    #api
+    path('api/auth/login/', authentications.sign_in),
+    path('api/auth/sign-up/', authentications.sign_up)
 ]
