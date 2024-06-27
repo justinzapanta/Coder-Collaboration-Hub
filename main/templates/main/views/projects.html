@@ -50,7 +50,7 @@
   </nav>
 
 
-  <!--POST MODAL-->
+  <!--POST Project MODAL-->
     <div id="post-modal" class="container max-w-full h-auto md:h-screen absolute top-0 hidden flex-col justify-center z-[150]" style="background-color: rgba(0, 0, 0, 0.483);">
         <div class="flex container max-w-full justify-center md:mt-0 ">
             <!-- Main modal -->
@@ -71,7 +71,7 @@
                             </button>
                         </div>
                         <!-- Modal body -->
-                        <form class="p-4 md:p-5">
+                        <form onsubmit="submit_post()" class="p-4 md:p-5">
                             <div class="grid gap-4 mb-4 grid-cols-2">
                                 <div class="col-span-2">
                                     <label for="project-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project Name</label>
@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="col-span-2">
                                     <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project Description</label>
-                                    <textarea id="description" rows="4" class="block p-2.5 w-full resize-none text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300  dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white " placeholder="Write project description here" required></textarea>                    
+                                    <textarea id="project-description" name="project-description" rows="4" class="block p-2.5 w-full resize-none text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300  dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white " placeholder="Write project description here" required></textarea>                    
                                 </div>
                             </div>
                             <div class="container max-w-full justify-center flex">
@@ -107,7 +107,7 @@
             </div> 
         </div>
     </div>
-  <!--POST MODAL END-->
+  <!--POST Project MODAL END-->
 
   
   <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
@@ -190,60 +190,78 @@
     </div>
 
 
-    <div class="p-4 sm:ml-64 mt-4">
-
-        <!--Post card-->
-        <div class="flex items-center justify-center h-48 mb-16 rounded">
-            <div class="container max-w-full mt-8 flex justify-center">
-                <div class="h-56 relative bg-slate-200 rounded-xl shadow-lg hover:cursor-pointer w-11/12 md:w-8/12">
-                    <div class="container absolute top-0 max-w-full justify-center flex">
-                        <h1 class="text-xs font-bold text-gray-500 mt-1">click to view</h1>
-                    </div>
-                    <div class=" flex relative">
-                        <a href="#">
-                            <div class="w-10 h-10 md:w-14 md:h-14 mt-5 ml-2 md:ml-4 rounded-full bg-black">
-                                <!--Image-->
-                                <img class="rounded-full" src="{% static 'img/justin.jpg' %}" alt="">
-                            </div>
-                        </a>
-                        <a class="font-bold mt-7 md:mt-8 ml-3 md:text-base text-sm" href="#">Justin Zapanta</a>
-                        {% if logined %}
-                            <svg id="star-id" onclick="add_favorite(self)" class="flex-shrink-9 w-10 h-9 absolute right-4 top-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 1l2.59 5.29 5.89.86-4.28 4.18 1.01 5.87-5.31-2.79-5.31 2.79 1.01-5.87-4.28-4.18 5.89-.86L10 1z"></path>
-                            </svg>
-                        {% else %}
-                            <svg onclick="show()" class="flex-shrink-9 w-10 h-9 absolute right-4 top-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 1l2.59 5.29 5.89.86-4.28 4.18 1.01 5.87-5.31-2.79-5.31 2.79 1.01-5.87-4.28-4.18 5.89-.86L10 1z"></path>
-                            </svg>
-                        {% endif %}
-                    </div>
-                    <!--Project Name-->
-                    <h1 class="ml-10 mt-1 font-bold md:text-base text-sm">Web Scraping Website</h1>
-                    <!--Project Description-->
-                    <div>
-                        <p class=" px-2 md:pr-2 md:px-0 md:ml-10 mt-2 line-clamp-5 md:line-clamp-4 md:text-sm text-xs">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, aliquid! Ex voluptatibus qui libero, porro impedit eaque dolor tempore fugiat eius fugit dolores maiores incidunt voluptatum nihil perferendis repellat nemo odit aspernatur animi illum? Beatae ut nesciunt corrupti quisquam deleniti recusandae nam accusantium placeat. Repudiandae, rerum tenetur! Assumenda eum perferendis reprehenderit accusantium sapiente, suscipit consequuntur illo repudiandae adipisci earum, et nulla doloremque exercitationem id nam numquam neque. Nisi soluta nam quae totam iure cumque pariatur deleniti, animi cum modi incidunt, ipsa consequatur assumenda hic dicta unde consectetur facilis ea amet aspernatur qui deserunt! Minima velit officiis eos rem quae illum eligendi inventore, obcaecati suscipit eaque sunt ea, libero pariatur animi laudantium ipsa, cupiditate alias voluptatum eum cum optio quaerat tempora magni? Facere natus architecto dolore voluptatum, voluptate doloremque adipisci doloribus voluptas nemo laboriosam explicabo eveniet saepe dignissimos ducimus nisi eum iste omnis quas, aliquam libero reprehenderit. Saepe asperiores fugit laboriosam esse. Corporis sunt aliquam reprehenderit ratione distinctio numquam quos tenetur! Vel obcaecati commodi dolores adipisci temporibus delectus cumque perferendis ex, molestias vitae cupiditate earum quia ipsum ducimus non enim numquam voluptas iusto quaerat incidunt culpa animi. Non nam in maiores quod. Illo, repudiandae quia. Facere repellendus inventore in hic assumenda.</p>
-                    </div>
-                    <!--tools-->
-                    <div class="mt-2 text-gray-500 border-t border-gray-300">
-                        <h1 class=" mt-3 px-2 ml-0 md:ml-4 truncate md:text-sm text-xs">Python, Javascript, html5, and Tailwindcss</h1>
+    <div id="post-card-container" class="p-4 sm:ml-64 mt-4">
+        {% for project in projects %}
+            <!--Post card-->
+            <div class="flex items-center justify-center h-48 mb-16 rounded">
+                <div class="container max-w-full mt-8 flex justify-center">
+                    <div class="h-56 relative bg-slate-200 rounded-xl shadow-lg hover:cursor-pointer w-11/12 md:w-8/12">
+                        <div class="container absolute top-0 max-w-full justify-center flex">
+                            <h1 class="text-xs font-bold text-gray-500 mt-1">click to view</h1>
+                        </div>
+                        <div class=" flex relative">
+                            <a href="#">
+                                <div class="w-10 h-10 md:w-14 md:h-14 mt-5 ml-2 md:ml-4 rounded-full bg-black">
+                                    <!--Image-->
+                                    <img class="rounded-full" src="{% static 'img/justin.jpg' %}" alt="">
+                                </div>
+                            </a>
+                            <a class="font-bold mt-7 md:mt-8 ml-3 md:text-base text-sm" href="#">{{project.project_owner.first_name}} {{project.project_owner.last_name}}</a>
+                            
+                            {% if logined %}
+                                <svg id="star-id-{{project.project_id}}" project-id="{{project.project_id}}" onclick="add_favorite(this)" class="flex-shrink-9 w-10 h-9 absolute right-4 top-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 1l2.59 5.29 5.89.86-4.28 4.18 1.01 5.87-5.31-2.79-5.31 2.79 1.01-5.87-4.28-4.18 5.89-.86L10 1z"></path>
+                                </svg>
+                            {% else %}
+                                <svg onclick="show()" class="flex-shrink-9 w-10 h-9 absolute right-4 top-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 1l2.59 5.29 5.89.86-4.28 4.18 1.01 5.87-5.31-2.79-5.31 2.79 1.01-5.87-4.28-4.18 5.89-.86L10 1z"></path>
+                                </svg>
+                            {% endif %}
+                        </div>
+                        <!--Project Name-->
+                        <h1 class="ml-10 mt-1 font-bold md:text-base text-sm">{{project.project_name}}</h1>
+                        <!--Project Description-->
+                        <div>
+                            <p class=" px-2 md:pr-2 md:px-0 md:ml-10 mt-2 line-clamp-5 md:line-clamp-4 md:text-sm text-xs">{{project.project_description}}</p>
+                        </div>
+                        <!--tools-->
+                        <div class="mt-2 text-gray-500 border-t border-gray-300">
+                            <h1 class=" mt-3 px-2 ml-0 md:ml-4 truncate md:text-sm text-xs">{{project.project_tools}}</h1>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--end post card-->
-
+            <!--end post card-->
+        {% endfor %}
      </div>
     {% block script %}
         <script>
-            let start_id = document.querySelector('#star-id')
-            function add_favorite(_self){
-                if(start_id.classList.contains('text-gray-500')){
-                    start_id.classList.replace('text-gray-500', 'text-yellow-600')
+            //Favorites
+            function add_favorite(this_){
+                let request = new XMLHttpRequest()
+                request.open('POST', '/api/projects/favorite/')
+                request.setRequestHeader('Content-type', 'application/json')
+
+                let id = this_.id
+                let star = document.querySelector(`#${id}`)
+                let project_id = parseInt(this_.getAttribute('project-id'))
+                if(star.classList.contains('text-gray-500')){
+                    request.send(JSON.stringify({
+                        'project-id': project_id,
+                        'add' : true
+                        }))
+                    star.classList.replace('text-gray-500', 'text-yellow-600')
                 }else{
-                    start_id.classList.replace('text-yellow-600', 'text-gray-500')
+                    request.send(JSON.stringify({
+                        'project-id': project_id,
+                        'add' : false
+                        }))
+                    star.classList.replace('text-yellow-600', 'text-gray-500')
                 }
             }
 
+
+            //Post Project Model
             let post_modal = document.querySelector('#post-modal')
             function post_project(){
                 post_modal.classList.replace('hidden', 'flex')
@@ -251,6 +269,35 @@
 
             function close_post(){
                 post_modal.classList.replace('flex', 'hidden')
+            }
+
+
+            //submit post
+            let project_name = document.querySelector('#project-name')
+            let github_link = document.querySelector('#github-link')
+            let discord_link = document.querySelector('#discord-link')
+            let tools = document.querySelector('#tools')
+            let project_description = document.querySelector('#project-description')
+
+            function submit_post(){
+                const today = new Date();
+                const yyyy = today.getFullYear()
+                const mm = String(today.getMonth() + 1).padStart(2, '0')
+                const dd = String(today.getDate()).padStart(2, '0')
+                const formattedDate = `${yyyy}/${mm}/${dd}`
+
+                let request = new XMLHttpRequest()
+                request.open('POST', '/api/projects/post/')
+                request.setRequestHeader('Content-type', 'application/json')
+
+                request.send(JSON.stringify({
+                    'project-name' : project_name.value,
+                    'github-link' : github_link.value,
+                    'discord-link' : discord_link.value,
+                    'tools' : tools.value,
+                    'project-description' : project_description.value,
+                    'current-date' : formattedDate
+                }))
             }
         </script>
     {% endblock %}

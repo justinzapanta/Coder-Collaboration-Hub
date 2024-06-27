@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
+from django.contrib.auth.models import User
+from .models import Projects, Favorites
 
 # Create your views here.
 def index(request):
@@ -12,7 +14,10 @@ def index(request):
 def projects(request):
     data = {}
     if request.user.is_authenticated:
-        data['logined'] = True 
+        data['logined'] = True
+    
+    project = Projects.objects.all()
+    data['projects'] = project
     return render(request, 'main/views/projects.html', data)
 
 
