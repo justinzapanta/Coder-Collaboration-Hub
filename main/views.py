@@ -16,8 +16,12 @@ def projects(request):
     if request.user.is_authenticated:
         data['logined'] = True
     
-    project = Projects.objects.all()
-    data['projects'] = project
+    if request.method == 'POST':
+        project = Projects.objects.filter(search_reference__icontains = request.POST['search'].lower())
+        data['projects'] = reversed(project)
+    else:
+        project = Projects.objects.all()
+        data['projects'] = reversed(project)
     return render(request, 'main/views/projects.html', data)
 
 

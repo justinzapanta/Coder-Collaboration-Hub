@@ -10,6 +10,7 @@ class Projects(models.Model):
     project_tools = models.CharField(max_length=250)
     project_discord_link = models.TextField()
     project_github_link = models.TextField()
+    search_reference = models.TextField()
     project_date = models.CharField(max_length=250)
 
     def __str__ (self):

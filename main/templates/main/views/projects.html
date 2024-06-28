@@ -20,7 +20,7 @@
         </div>
         
     <div class="px-4 sm:ml-64 flex-1 md:block hidden">
-        <form class="max-w-md mx-auto px-2">   
+        <form class="max-w-md mx-auto px-2" method="POST" action="{% url 'projects' %}">   
             {% csrf_token %}
             <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
             <div class="relative">
@@ -29,8 +29,8 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="search" id="default-search" class="block w-full p-4 mt-2  ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " placeholder="Search Users/Projects" required />
-                <button type="submit" class="text-white border border-gray-500 absolute end-2.5 bottom-2.5 bg-gray-500 hover:bg-slate-800 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 ">Search</button>
+                <input type="search" name="search" id="default-search" class="block w-full p-4 mt-2  ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " placeholder="Search Users/Projects" />
+                <button type="submit" class="text-white border border-gray-500 absolute end-2.5 bottom-2.5 bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 ">Search</button>
             </div>
         </form>  
     </div>
@@ -51,15 +51,15 @@
 
 
   <!--POST Project MODAL-->
-    <div id="post-modal" class="container max-w-full h-auto md:h-screen absolute top-0 hidden flex-col justify-center z-[150]" style="background-color: rgba(0, 0, 0, 0.483);">
+    <div id="post-modal" class="container max-w-full h-screen fixed top-0 hidden flex-col justify-center z-[150]" style="background-color: rgba(0, 0, 0, 0.483);">
         <div class="flex container max-w-full justify-center md:mt-0 ">
             <!-- Main modal -->
-            <div  tabindex="-1" aria-hidden="true" class=" md:mt-1 mt-6 overflow-x-hidden justify-center items-center sm:w-full md:w-auto  md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                <div class="relative p-4 w-full max-w-md max-h-full">
+            <div  tabindex="-1" aria-hidden="true" class=" justify-center items-center sm:w-full md:w-auto  md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div class="relative px-4 py-1 w-full max-w-md max-h-full">
                     <!-- Modal content -->
                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                         <!-- Modal header -->
-                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                        <div class="flex items-center justify-between px-4 py-1 border-b rounded-t dark:border-gray-600">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                                 Post Your Project
                             </h3>
@@ -71,23 +71,30 @@
                             </button>
                         </div>
                         <!-- Modal body -->
-                        <form onsubmit="submit_post()" class="p-4 md:p-5">
+                        <form onsubmit="submit_post(this, event)" class="px-4 py-1.5">
                             <div class="grid gap-4 mb-4 grid-cols-2">
                                 <div class="col-span-2">
-                                    <label for="project-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project Name</label>
-                                    <input type="text" name="project-name" id="project-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type project name" required="">
+                                    <div class="container max-w-max flex">
+                                        <label for="project-name" class="block mb-2 flex-1 text-sm font-medium text-gray-900 dark:text-white">Project Name</label>
+                                        <h1 id="submit-notif" class="text-red-500 text-xs"></h1>
+                                    </div>
+                                    <input type="text" name="project-name" id="project-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block min-w-72 w-full px-2.5 py-1.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type Project Name" required="">
                                 </div>
                                 <div class="col-span-2 sm:col-span-1">
                                     <label for="github-link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">GitHub Project Link</label>
-                                    <input type="text" name="github-link" id="github-link" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="https://github.com/user/your project name" required="">
+                                    <input type="text" name="github-link" id="github-link" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full px-2.5 py-1.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="GitHub Link" required="">
                                 </div>
                                 <div class="col-span-2 sm:col-span-1">
                                     <label for="discord-link" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Discord Invitation Link</label>
-                                    <input type="text" name="discord-link" id="discord-link" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="https://discord.gg/HH64zYgrrw" required="">
+                                    <input type="text" name="discord-link" id="discord-link" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full px-2.5 py-1.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Discord Link" required="">
                                 </div>
                                 <div class="col-span-2">
                                     <label for="tools" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Programming Language and Framework</label>
-                                    <input type="text" name="tools" id="tools" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Python, Django" required="">
+                                    <input type="text" name="tools" id="tools" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full px-2.5 py-1.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Programming and Framework" required="">
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="small_size">Upload Project Image</label>
+                                    <input accept="image/*" class="block w-full text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file">        
                                 </div>
                                 <div class="col-span-2">
                                     <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project Description</label>
@@ -173,8 +180,8 @@
      </div>
   </aside>
 
-    <div class="p-4  md:hidden block">
-        <form class="max-w-md mx-auto px-2">   
+    <div class="px-4  md:hidden block">
+        <form class="max-w-md mx-auto px-2" method="POST" action="{% url 'projects' %}">   
             {% csrf_token %}
             <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
             <div class="relative ">
@@ -183,50 +190,134 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="search" id="default-search" class="block w-full p-4 mt-2  ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Search Users/Projects" required />
-                <button type="submit" class="text-white border border-gray-500 absolute end-2.5 bottom-2.5 bg-gray-500 hover:bg-slate-800 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 ">Search</button>
+                <input type="search" name="search" id="default-search" class="block w-full p-4 mt-2  ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Search Users/Projects" />
+                <button type="submit" class="text-white border border-gray-500 absolute end-2.5 bottom-2.5 bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2 ">Search</button>
             </div>
         </form>  
     </div>
 
 
-    <div id="post-card-container" class="p-4 sm:ml-64 mt-4">
+    <!--POST CARD MODAL-->
+    <div id="post-card-modal" class="container max-w-full fixed h-screen hidden flex-col justify-center z-[100] top-0" style="background-color: rgba(0, 0, 0, 0.483);">
+        <div class="container max-w-full flex justify-center">
+            <div id="small-modal" tabindex="-1" class=" md:mt-0 p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div class="relative w-full max-w-md max-h-full">
+                    <!-- Modal content -->
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <!-- Modal header -->
+                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                            <h3 id="post-card-modal-project-name" class="text-lg font-medium text-gray-900 dark:text-white">
+                                Project Name
+                            </h3>
+                            <button onclick="close_post_modal()" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="small-modal">
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                        </div>
+                        <!--Image-->
+
+                        <div id="default-carousel" class="relative w-full" data-carousel="slide">
+                            <!-- Carousel wrapper -->
+                            <div class="relative h-44 overflow-hidden rounded-lg md:h-52">
+                                 <!-- Item 1 -->
+                                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                                    <img src="{% static 'img/team.png' %}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                                </div>
+                                <!-- Item 2 -->
+                                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                                    <img src="{% static 'img/team.png' %}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                                </div>
+                                <!-- Item 3 -->
+                                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                                    <img src="{% static 'img/team.png' %}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                                </div>
+                            </div>
+                            <!-- Slider indicators -->
+                            <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                                <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+                                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+                                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+                            </div>
+                            <!-- Slider controls -->
+                            <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+                                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                                    <svg class="w-4 h-4 text-black dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                                    </svg>
+                                    <span class="sr-only">Previous</span>
+                                </span>
+                            </button>
+                            <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+                                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                                    <svg class="w-4 h-4 text-black dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                                    </svg>
+                                    <span class="sr-only">Next</span>
+                                </span>
+                            </button>
+                        </div>
+                        
+                        <!-- Modal body -->
+                        <div class="p-4 md:p-5 space-y-4 overflow-y-auto md:min-w-32 min-w-24 max-h-48 md:max-h-48">
+                            <p id="post-card-modal-description" class="text-sm leading-relaxed text-gray-500  dark:text-gray-400">
+                                Description
+                            </p>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 container max-w-full">
+                            <a id="github-link-button" target="_blank" type="button" href="#" class="text-white flex-1 w-1/12 bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">GitHub</a>
+                            <a id="discord-link-button" target="_blank" type="button" href="#" class="py-2.5 px-5 w-1/12 flex-1 ms-3 text-sm text-white font-medium focus:outline-none bg-purple-700 rounded-lg border border-gray-200 hover:bg-purple-600 focus:z-10 focus:ring-4 focus:ring-gray-100 text-center">Join Discord</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END POST CARD MODAL-->
+
+
+    <div id="post-card-container" class="p-4 sm:ml-64 md:mt-4">
         {% for project in projects %}
             <!--Post card-->
-            <div class="flex items-center justify-center h-48 mb-16 rounded">
+            <div class="flex items-center justify-center h-48 mb-7 rounded">
                 <div class="container max-w-full mt-8 flex justify-center">
-                    <div class="h-56 relative bg-slate-200 rounded-xl shadow-lg hover:cursor-pointer w-11/12 md:w-8/12">
-                        <div class="container absolute top-0 max-w-full justify-center flex">
-                            <h1 class="text-xs font-bold text-gray-500 mt-1">click to view</h1>
-                        </div>
-                        <div class=" flex relative">
-                            <a href="#">
-                                <div class="w-10 h-10 md:w-14 md:h-14 mt-5 ml-2 md:ml-4 rounded-full bg-black">
-                                    <!--Image-->
-                                    <img class="rounded-full" src="{% static 'img/justin.jpg' %}" alt="">
-                                </div>
-                            </a>
-                            <a class="font-bold mt-7 md:mt-8 ml-3 md:text-base text-sm" href="#">{{project.project_owner.first_name}} {{project.project_owner.last_name}}</a>
-                            
-                            {% if logined %}
-                                <svg id="star-id-{{project.project_id}}" project-id="{{project.project_id}}" onclick="add_favorite(this)" class="flex-shrink-9 w-10 h-9 absolute right-4 top-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M10 1l2.59 5.29 5.89.86-4.28 4.18 1.01 5.87-5.31-2.79-5.31 2.79 1.01-5.87-4.28-4.18 5.89-.86L10 1z"></path>
-                                </svg>
-                            {% else %}
-                                <svg onclick="show()" class="flex-shrink-9 w-10 h-9 absolute right-4 top-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M10 1l2.59 5.29 5.89.86-4.28 4.18 1.01 5.87-5.31-2.79-5.31 2.79 1.01-5.87-4.28-4.18 5.89-.86L10 1z"></path>
-                                </svg>
-                            {% endif %}
-                        </div>
-                        <!--Project Name-->
-                        <h1 class="ml-10 mt-1 font-bold md:text-base text-sm">{{project.project_name}}</h1>
-                        <!--Project Description-->
-                        <div>
-                            <p class=" px-2 md:pr-2 md:px-0 md:ml-10 mt-2 line-clamp-5 md:line-clamp-4 md:text-sm text-xs">{{project.project_description}}</p>
-                        </div>
-                        <!--tools-->
-                        <div class="mt-2 text-gray-500 border-t border-gray-300">
-                            <h1 class=" mt-3 px-2 ml-0 md:ml-4 truncate md:text-sm text-xs">{{project.project_tools}}</h1>
+                    <div class=" relative bg-slate-200 rounded-xl shadow-md hover:cursor-pointer w-11/12 md:w-8/12">
+                        {% if logined %}
+                            <svg id="star-id-{{project.project_id}}" project-id="{{project.project_id}}" onclick="add_favorite(this)" class="flex-shrink-9 w-10 h-9 z-20 absolute right-4 top-5 text-gray-500 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 1l2.59 5.29 5.89.86-4.28 4.18 1.01 5.87-5.31-2.79-5.31 2.79 1.01-5.87-4.28-4.18 5.89-.86L10 1z"></path>
+                            </svg>
+                        {% else %}
+                            <svg onclick="show()" class="flex-shrink-9 w-10 h-9 absolute right-4 top-5 text-gray-500 transition duration-75 z-20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 1l2.59 5.29 5.89.86-4.28 4.18 1.01 5.87-5.31-2.79-5.31 2.79 1.01-5.87-4.28-4.18 5.89-.86L10 1z"></path>
+                            </svg>
+                        {% endif %}
+                        <div class="h-full w-full" onclick="show_post_card_modal(this)" github-link="{{project.project_github_link}}" discord-link="{{project.project_discord_link}}" id="post-card-{{project.project_id}}">
+                            <div class="container absolute top-0 max-w-full justify-center flex">
+                                <h1 class="text-xs font-bold text-gray-500 mt-1">click to view and join</h1>
+                            </div>
+                            <div class=" flex relative">
+                                <a href="#">
+                                    <div class="w-10 h-10 md:w-14 md:h-14 mt-5 ml-2 md:ml-4 rounded-full bg-black">
+                                        <!--Image-->
+                                        <img class="rounded-full" src="{% static 'img/justin.jpg' %}" alt="">
+                                    </div>
+                                </a>
+                                <a class="font-bold mt-7 md:mt-8 ml-3 md:text-base text-sm post-card-{{project.project_id}}" href="#">{{project.project_owner.first_name}} {{project.project_owner.last_name}}</a>
+                            </div>
+                            <!--Project Name-->
+                            <div class="container max-w-full md:absolute top-10 flex justify-center">
+                                <h1 id="post-card-project-name" class="text-center md:mt-1 font-bold truncate w-44 md:w-80 md:text-base text-sm post-card-{{project.project_id}}">{{project.project_name}}</h1>
+                            </div>
+                            <!--Project Description-->
+                            <div>
+                                <p id="post-card-description" class="px-5 md:mt-3 mt-2 line-clamp-4 md:line-clamp-3 md:text-sm text-xs post-card-{{project.project_id}}">{{project.project_description}}</p>
+                            </div>
+                            <!--tools-->
+                            <div class="mt-2 text-gray-500 border-t border-gray-300">
+                                <h1 id="post-card-tools" class=" mt-3 px-2 ml-0 mb-4 md:ml-4 truncate md:text-sm text-xs post-card-{{project.project_id}}">{{project.project_tools}}</h1>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -258,6 +349,7 @@
                         }))
                     star.classList.replace('text-yellow-600', 'text-gray-500')
                 }
+                
             }
 
 
@@ -278,8 +370,10 @@
             let discord_link = document.querySelector('#discord-link')
             let tools = document.querySelector('#tools')
             let project_description = document.querySelector('#project-description')
+            let post_notif = document.querySelector('#submit-notif')
 
-            function submit_post(){
+            function submit_post(_this, event){
+                event.preventDefault()
                 const today = new Date();
                 const yyyy = today.getFullYear()
                 const mm = String(today.getMonth() + 1).padStart(2, '0')
@@ -290,14 +384,44 @@
                 request.open('POST', '/api/projects/post/')
                 request.setRequestHeader('Content-type', 'application/json')
 
-                request.send(JSON.stringify({
-                    'project-name' : project_name.value,
-                    'github-link' : github_link.value,
-                    'discord-link' : discord_link.value,
-                    'tools' : tools.value,
-                    'project-description' : project_description.value,
-                    'current-date' : formattedDate
-                }))
+                if (String(github_link.value).includes('https://github.com/')){
+                    github_link.classList.replace('border-red-500', 'border-gray-300')
+                    if (String(github_link.value).includes('https://github.com/')){
+                        request.send(JSON.stringify({
+                            'project-name' : project_name.value,
+                            'github-link' : github_link.value,
+                            'discord-link' : discord_link.value,
+                            'tools' : tools.value,
+                            'project-description' : project_description.value,
+                            'current-date' : formattedDate
+                            }))
+                        _this.submit()
+                        request.onloadend = () => {
+                            window.location.href = '/projects'
+                        }
+                    }else{
+                        post_notif.textContent = 'Incorrect Discord link'
+                        discord_link.classList.replace('border-gray-300', 'border-red-500')
+                    }
+                }else{
+                    post_notif.textContent = 'Incorrect Github link'
+                    github_link.classList.replace('border-gray-300', 'border-red-500')
+                }
+            }
+
+            function show_post_card_modal(_this){
+                document.querySelector('#post-card-modal').classList.replace('hidden', 'flex')
+                let post = document.querySelectorAll(`.${_this.id}`)
+                
+                document.querySelector('#post-card-modal-project-name').textContent = post[1].textContent
+                document.querySelector('#post-card-modal-description').textContent = post[2].textContent
+                document.querySelector('#github-link-button').href = _this.getAttribute('github-link')
+                document.querySelector('#discord-link-button').href = _this.getAttribute('discord-link')
+
+            }
+
+            function close_post_modal(){
+                document.querySelector('#post-card-modal').classList.replace('flex', 'hidden')
             }
         </script>
     {% endblock %}
