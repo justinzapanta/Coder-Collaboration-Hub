@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from .api.authentication import authentications
 from .api.backend import projects
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -15,4 +17,4 @@ urlpatterns = [
     #projects
     path('api/projects/post/', projects.post_project),
     path('api/projects/favorite/', projects.favorite)
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

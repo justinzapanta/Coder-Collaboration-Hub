@@ -11,7 +11,7 @@ def post_project(request):
         try:
             user = User.objects.get(username = request.user)
             data = json.loads(request.body)
-
+            
             project = Projects(
                 project_owner = user,
                 project_name = data['project-name'],
