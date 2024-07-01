@@ -8,23 +8,32 @@ import json
 @csrf_exempt
 def post_project(request):
     if request.user.is_authenticated:
-        try:
+        if request.method == 'POST':
             user = User.objects.get(username = request.user)
-            data = json.loads(request.body)
             
-            project = Projects(
-                project_owner = user,
-                project_name = data['project-name'],
-                project_description = data['project-description'],
-                project_tools = data['tools'],
-                project_discord_link = data['discord-link'],
-                project_github_link = data['github-link'],
-                project_date = data['current-date'],
-                )
+            if request.FILES.get('image'):
+                project = Projects(
+                    project_owner = user,
+                    project_name = request.POST['project-name'],
+                    project_description = request.POST['project-description'],
+                    project_tools = request.POST['tools'],
+                    project_discord_link = request.POST['discord-link'],
+                    project_github_link = request.POST['github-link'],
+                    project_image = request.FILES['image'],
+                    project_date = request.POST['current-date'],
+                    )
+            else:
+                project = Projects(
+                    project_owner = user,
+                    project_name = request.POST['project-name'],
+                    project_description = request.POST['project-description'],
+                    project_tools = request.POST['tools'],
+                    project_discord_link = request.POST['discord-link'],
+                    project_github_link = request.POST['github-link'],
+                    project_date = request.POST['current-date'],
+                    )
             project.save()
             return JsonResponse({'message' : 'success'}, status=200)
-        except:
-            return JsonResponse({'message' : 'Try Again'}, status=200)
     return JsonResponse({'message' : 'Error'}, status=200)
 
 
@@ -52,3 +61,8 @@ def favorite(request):
                 return JsonResponse({'message' : 'Success'})
             
     return JsonResponse({'message' : 'Error'})
+
+
+@csrf_exempt
+def delete_post(request):
+    pass

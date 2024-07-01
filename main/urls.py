@@ -16,5 +16,6 @@ urlpatterns = [
 
     #projects
     path('api/projects/post/', projects.post_project),
-    path('api/projects/favorite/', projects.favorite)
+    path('api/projects/favorite/', projects.favorite),
+    path('api/projects/delete/', projects.delete_post)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -6,10 +6,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-      screens: {
-        'md2': '1000',
-        // => @media (min-width: 1000px) { ... }
-      },
       width: {
         '500': '500px',
         '550': '550px',
