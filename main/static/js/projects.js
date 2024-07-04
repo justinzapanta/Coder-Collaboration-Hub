@@ -44,9 +44,15 @@ let post_modal = document.querySelector('#post-modal')
 
 function post_project(this_='for update', method='post'){
     const post_form = document.querySelector('#post-form-id')
-
+    document.querySelector('#submit-notif').textContent = ''
+    document.querySelector('#project-name').classList.replace('border-red-500', 'border-gray-300')
+    github_link.classList.replace('border-red-500', 'border-gray-300')
+    discord_link.classList.replace('border-red-500', 'border-gray-300')
+    
     if (method == 'update'){
+        document.querySelector('#post-button-text-id').textContent = 'Update project'
         document.querySelector('#post-project-title').textContent = 'Edit Project'
+
         post_modal.classList.replace('hidden', 'flex')
 
         const id = String(this_.id).replace('update-', '')
@@ -67,7 +73,6 @@ function post_project(this_='for update', method='post'){
         post_form_inputs[3].value = post_cart_info[3].textContent
         //description
         post_form_inputs[4].value = post_cart_info[2].textContent
-
         //upload image Label
         if (card.getAttribute('image')){
             document.querySelector('#upload-image-label').textContent = 'Update Image'
@@ -76,6 +81,7 @@ function post_project(this_='for update', method='post'){
         }
         
     }else if(method == 'post'){
+        document.querySelector('#post-button-text-id').textContent = 'Add new Project'
         post_form.setAttribute('form-method', 'post')
         document.querySelector('#upload-image-label').textContent = 'Upload Project Image (optional)'
         post_modal.classList.replace('hidden', 'flex')
@@ -119,33 +125,38 @@ function submit_post(_this, event){
 
     if (String(github_link.value).includes('https://github.com/')){
         github_link.classList.replace('border-red-500', 'border-gray-300')
-        if (String(github_link.value).includes('https://github.com/')){
-            const form_data = new FormData()
-
-            const data = {
-                'project-name' : project_name.value,
-                'github-link' : github_link.value,
-                'discord-link' : discord_link.value,
-                'tools' : tools.value,
-                'project-description' : project_description.value,
-                'current-date' : formattedDate,
+        if (String(discord_link.value).includes('https://discord.com/') || String(discord_link.value).includes('https://discord.gg/')){
+            discord_link.classList.replace('border-red-500', 'border-gray-300')
+            if (document.querySelector('#project-name').value.length <= 60){
+                const form_data = new FormData()
+                const data = {
+                    'project-name' : project_name.value,
+                    'github-link' : github_link.value,
+                    'discord-link' : discord_link.value,
+                    'tools' : tools.value,
+                    'project-description' : project_description.value,
+                    'current-date' : formattedDate,
+                    }
+    
+                if (upload_img.files[0]){
+                    data['image'] = upload_img.files[0]
                 }
-
-            if (upload_img.files[0]){
-                data['image'] = upload_img.files[0]
-            }
-            if (method == 'update'){
-                data['project_id'] = _this.getAttribute('project-id')
-            }
-
-            for (key in data){
-                form_data.append(key, data[key])
-            }
-            
-            request.send(form_data)
-
-            request.onloadend = () => {
-                _this.submit()
+                if (method == 'update'){
+                    data['project_id'] = _this.getAttribute('project-id')
+                }
+    
+                for (key in data){
+                    form_data.append(key, data[key])
+                }
+                
+                request.send(form_data)
+    
+                request.onloadend = () => {
+                    _this.submit()
+                }
+            }else{
+                post_notif.textContent = 'ensure your project name is 60 characters or fewer'
+                document.querySelector('#project-name').classList.replace('border-gray-300', 'border-red-500')
             }
         }else{
             post_notif.textContent = 'Incorrect Discord link'
