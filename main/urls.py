@@ -7,7 +7,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('projects/', views.projects, name='projects'),
+    path('projects/<int:current_page>/', views.projects, name='projects'),
+    path('projects/', views.projects, {'current_page': 1}, name='projects'),
     path('sign-out', views.sign_out, name='sign out'),
 
     #api
