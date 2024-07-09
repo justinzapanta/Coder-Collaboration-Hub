@@ -181,7 +181,7 @@ function show_post_card_modal(_this){
     if(_this.getAttribute('image')){
         const image_path = `${_this.getAttribute('image')}`
         document.querySelector('#default-carousel').classList.replace('hidden', 'block')
-        document.querySelector('#post-card-model-img').src = image_path
+        document.querySelector('#post-card-model-img').style.backgroundImage = `url("${image_path}")`
     }else{
         document.querySelector('#default-carousel').classList.replace('block', 'hidden')
     }
