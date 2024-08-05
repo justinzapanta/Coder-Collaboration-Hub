@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from ...models import User_UUID
 import json
 
 @csrf_exempt
@@ -26,12 +27,16 @@ def sign_up(request):
         if data:
             user = User.objects.filter(username = data['signup_email'])
             if not user:
-                User.objects.create_user(
+                user = User.objects.create_user(
                     username = data['signup_email'],
                     password = data['signup_password'],
                     first_name = data['first_name'],
                     last_name = data['last_name'],
                     )
+                user.save
+
+                user_uuid = User_UUID(user_account = user)
+                user_uuid.save()
                 return JsonResponse({'message' : 'Success'}, status=200)
             else:
                 return JsonResponse({'message' : 'Email already in use'}, status=200)

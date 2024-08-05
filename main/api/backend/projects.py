@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
-from ...models import Projects, Favorites
+from ...models import Projects, Favorites, User_UUID
 
 import json
 
@@ -31,39 +31,6 @@ def post_project(request):
 
 
 @csrf_exempt
-def favorite(request):
-    if request.user.is_authenticated:
-        data = json.loads(request.body)
-        if data:
-            user = User.objects.get(username = request.user)
-            project = Projects.objects.get(project_id = data['project-id'])
-            favorite = Favorites.objects.filter(favorite_project = project, user = user)
-    
-            if not favorite: 
-                add_favorite = Favorites(favorite_project = project, user = user)
-                add_favorite.save()
-            else:
-                favorite.delete()
-            return JsonResponse({'message' : 'Success'})
-        
-    return JsonResponse({'message' : 'Error'})
-
-
-@csrf_exempt
-def delete_post(request):
-    if request.user.is_authenticated:
-        if request.method == 'POST':
-            id = request.POST['project_id'].replace('delete-', '')
-            project = Projects.objects.get( project_id =  id)
-
-            if project.project_owner.username == request.user.username:
-                project.delete()
-            
-            return JsonResponse({'message' : 'success'}, status=200)
-    return JsonResponse({'message' : 'error'}, status=200)
-
-
-@csrf_exempt
 def update_project(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -84,3 +51,48 @@ def update_project(request):
                 
                 return JsonResponse({'message' : 'success'}, status=200)
     return JsonResponse({'message' : 'error'}, status=200)
+
+
+@csrf_exempt
+def delete_post(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            id = request.POST['project_id'].replace('delete-', '')
+            project = Projects.objects.get( project_id =  id)
+
+            if project.project_owner.username == request.user.username:
+                project.delete()
+            return JsonResponse({'message' : 'success'}, status=200)
+    return JsonResponse({'message' : 'error'}, status=200)
+
+
+@csrf_exempt
+def favorite(request):
+    if request.user.is_authenticated:
+        data = json.loads(request.body)
+        if data:
+            user = User.objects.get(username = request.user)
+            project = Projects.objects.get(project_id = data['project-id'])
+            favorite = Favorites.objects.filter(favorite_project = project, user = user)
+    
+            if not favorite: 
+                add_favorite = Favorites(favorite_project = project, user = user)
+                add_favorite.save()
+            else:
+                favorite.delete()
+            return JsonResponse({'message' : 'Success'})
+    return JsonResponse({'message' : 'Error'})
+
+
+@csrf_exempt
+def view_owner(request):
+    data = json.loads(request.body)
+    try:
+        project = Projects.objects.get(project_id = data['project_id'])
+    except:
+        project = False
+
+    if project:
+        user_uuid = User_UUID.objects.get(user_account = project.project_owner)
+        return JsonResponse({'message' : user_uuid.user_UIID}, status = 200)
+    return JsonResponse({'message' : 'error'}, status = 200)

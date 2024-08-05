@@ -64,15 +64,15 @@ function post_project(this_='for update', method='post'){
         post_form.setAttribute('project-id', id)
         
         //project name
-        post_form_inputs[0].value = post_cart_info[1].textContent 
+        post_form_inputs[0].value = post_cart_info[2].textContent 
         // github link
         post_form_inputs[1].value = card.getAttribute('github-link')
         // discord link
         post_form_inputs[2].value = card.getAttribute('discord-link')
         //programming languages and frameword
-        post_form_inputs[3].value = post_cart_info[3].textContent
+        post_form_inputs[3].value = post_cart_info[4].textContent
         //description
-        post_form_inputs[4].value = post_cart_info[2].textContent
+        post_form_inputs[4].value = post_cart_info[3].textContent
         //upload image Label
         if (card.getAttribute('image')){
             document.querySelector('#upload-image-label').textContent = 'Update Image'
@@ -171,11 +171,15 @@ function submit_post(_this, event){
 function show_post_card_modal(_this){
     document.querySelector('#post-card-modal').classList.replace('hidden', 'flex')
     let post = document.querySelectorAll(`.${_this.id}`)
-
-    document.querySelector('#post-card-modal-project-name').textContent = post[1].textContent
-    document.querySelector('#post-card-modal-description').textContent = post[2].textContent
+    document.querySelector('#post-card-modal-profile-image').src = post[0].src
+    document.querySelector('#post-card-modal-user-name').textContent = post[1].textContent
+    document.querySelector('#post-card-modal-project-name').textContent = post[2].textContent
+    document.querySelector('#post-card-modal-description').textContent = String(post[3].textContent)
     document.querySelector('#github-link-button').href = _this.getAttribute('github-link')
     document.querySelector('#discord-link-button').href = _this.getAttribute('discord-link')
+
+    document.querySelector('#post-card-modal-user-name').setAttribute('pid', _this.id)
+    document.querySelector('#post-card-modal-profile-image').setAttribute('pid', _this.id)
 
     //check if the post have image
     if(_this.getAttribute('image')){
@@ -186,6 +190,19 @@ function show_post_card_modal(_this){
         document.querySelector('#default-carousel').classList.replace('block', 'hidden')
     }
 
+}
+
+function view_profile(this_){
+    const project_id = this_.getAttribute('pid').replace('post-card-', '')
+    const request = new XMLHttpRequest()
+    request.open('POST', '/api/projects/view_owner/')
+    request.setRequestHeader('Content-Type', 'application/json')
+    request.send(JSON.stringify({project_id : project_id}))
+
+    request.onloadend = () => {
+        const result = JSON.parse(request.responseText)
+        window.location.href = `/profile/${result['message']}`
+    }
 }
 
 function close_post_modal(){
@@ -217,4 +234,12 @@ function delete_post(this_){
     request.onloadend = () => {
         window.location.href = '/projects'
     }
+}
+
+
+
+//Profile
+//follow
+function follow_button(this_) {
+    this_.textContent = 'Unfollow'
 }
