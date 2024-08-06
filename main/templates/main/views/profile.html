@@ -16,17 +16,6 @@
                 </div>
             </div>
             <h1 class="text-center font-bold mt-2 text-lg">{{user.first_name}} {{user.last_name}}</h1>
-            <div class="container max-w-full flex justify-center">
-                <ul class="flex mt-1.5 ">
-                    <li class=""><a href="#" class="mr-5 hover:underline">Followers</a></li>
-                    <li><a href="" class="hover:underline">Following</a></li>
-                </ul>
-            </div>
-            {% if not user_profile %}
-                <div class="text-center">
-                    <button onclick="follow_button(this)" class="mt-4 border border-black bg-slate-950 hover:bg-slate-800 text-white font-bold py-1 px-4 rounded-lg">Follow <strong>+</strong></button>
-                </div>
-            {% endif %}
         </div>
     </div>
 {% endblock %}

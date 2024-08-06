@@ -236,10 +236,3 @@ function delete_post(this_){
     }
 }
 
-
-
-//Profile
-//follow
-function follow_button(this_) {
-    this_.textContent = 'Unfollow'
-}
